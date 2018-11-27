@@ -9,22 +9,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="JoyBug!"/>
+        android:text="Welcome, passenger"/>
 
     <Button
-        android:id="@+id/driveButton"
+        android:id="@+id/HomeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Driver"
+        android:text="Home"
         tools:layout_editor_absoluteX="61dp"
         tools:layout_editor_absoluteY="356dp" />
-
-    <Button
-        android:id="@+id/bumButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Passenger"
-        tools:layout_editor_absoluteX="256dp"
-        tools:layout_editor_absoluteY="356dp" />
-
 </RelativeLayout>
