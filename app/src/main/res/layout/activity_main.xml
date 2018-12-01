@@ -12,7 +12,7 @@
         android:text="JoyBug!"/>
 
     <Button
-        android:id="@+id/driveButton"
+        android:id="@+id/newButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -21,18 +21,18 @@
         android:layout_marginTop="240dp"
         android:layout_marginEnd="73dp"
         android:layout_marginRight="73dp"
-        android:text="Driver"
+        android:text="New User"
         tools:layout_editor_absoluteX="61dp"
         tools:layout_editor_absoluteY="356dp" />
 
     <Button
-        android:id="@+id/passButton"
+        android:id="@+id/oldButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="240dp"
         android:layout_marginLeft="73dp"
-        android:text="Passenger"
+        android:text="Login"
         tools:layout_editor_absoluteX="256dp"
         tools:layout_editor_absoluteY="356dp" />
 
