@@ -8,6 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     private Button driveButton;
+    private Button passButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +22,22 @@ public class MainActivity extends AppCompatActivity {
                 openDriverActivity();
             }
         });
+
+        passButton = (Button) findViewById(R.id.passButton);
+        passButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPassengerActivity();
+            }
+        });
     }
 
     public void openDriverActivity() {
         Intent intent = new Intent(this, DriverActivity.class);
+        startActivity(intent);
+    }
+    public void openPassengerActivity() {
+        Intent intent = new Intent(this, PassengerActivity.class);
         startActivity(intent);
     }
 }
