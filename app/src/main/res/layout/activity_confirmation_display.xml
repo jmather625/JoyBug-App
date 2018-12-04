@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ConfirmationDisplay">
+    tools:context=".ConfirmationDisplay"
+    android:background="#FFF">
+
 
     <ImageView
         android:id="@+id/imageView"
@@ -45,6 +47,7 @@ Please check your email for messages from potential passengers until"/>
         android:textSize="50sp"
         android:gravity="center"
         android:textColor="#3cc9a6"
+        android:text="0/0/0000"
 
          />
 

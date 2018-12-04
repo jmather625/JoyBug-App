@@ -25,7 +25,7 @@ import android.widget.CalendarView;
                 openConfirmationDisplay();
             }
         });
-        Button passButton = (Button) findViewById(R.id.driveButton);
+        Button passButton = (Button) findViewById(R.id.passButton);
         passButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
