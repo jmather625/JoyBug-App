@@ -18,6 +18,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 
+import com.google.firebase.database.*;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     GoogleSignInClient mGoogleSignInClient;
     private static final String TAG = "MainActivity";
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return price;
     }
 
+    private FirebaseDatabase database;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -77,7 +81,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
+        Driver testDriver = new Driver("TEST", "TEST", "Chicago", "Cool kid", "12-10-18", "10");
+        Database d = new Database(FirebaseDatabase.getInstance());
+        boolean testAdd = d.addDriver(testDriver);
     }
 
     public void onClick(View v) {
@@ -122,8 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void updateUI(GoogleSignInAccount acct) {
 
             String personName = acct.getDisplayName();
-            String personGivenName = acct.getGivenName();
-            String personFamilyName = acct.getFamilyName();
+            //String personGivenName = acct.getGivenName();
+            //String personFamilyName = acct.getFamilyName();
             String personEmail = acct.getEmail();
             //String personId = acct.getId();
             //Uri personPhoto = acct.getPhotoUrl();

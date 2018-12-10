@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.util.*;
+
+import com.google.firebase.database.*;
 
 public class PricePicker extends AppCompatActivity {
 
@@ -64,7 +67,16 @@ public class PricePicker extends AppCompatActivity {
     }
     public void openConfirmationDisplay() {
         Intent intent = new Intent(this, ConfirmationDisplay.class);
-        startActivity(intent);
+        String name = MainActivity.getName();
+        String email = MainActivity.getEmail().replace(".", " ");
+        String bio = MainActivity.getBio();
+        String departDate = MainActivity.getDate();
+        String destination = MainActivity.getDest();
+        String price = MainActivity.getPrice();
 
+        Driver testDriver = new Driver(name, email, bio, departDate, destination, price);
+        Database d = new Database(FirebaseDatabase.getInstance());
+        boolean testAdd = d.addDriver(testDriver);
+        startActivity(intent);
     }
 }

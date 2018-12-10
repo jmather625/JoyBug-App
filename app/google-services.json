@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "294868883441",
+    "firebase_url": "https://joybug-e1d72.firebaseio.com",
+    "project_id": "joybug-e1d72",
+    "storage_bucket": "joybug-e1d72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294868883441:android:ef9a332e0afbd1b7",
+        "android_client_info": {
+          "package_name": "com.example.jatin.joybug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294868883441-gkibasjblku0hg79jn0cka1n6kvhdqa3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jatin.joybug",
+            "certificate_hash": "5e2113d3cec248f8b9965ba41ef36706b41276d4"
+          }
+        },
+        {
+          "client_id": "294868883441-953opg7ice2lcu6khops5tgf0jjnu03n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRNU943oFqGqvrHTjwpGi5ww4O8xC8k9o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294868883441-953opg7ice2lcu6khops5tgf0jjnu03n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

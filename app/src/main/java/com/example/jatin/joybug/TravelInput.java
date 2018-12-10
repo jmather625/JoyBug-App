@@ -50,7 +50,7 @@ import java.util.Calendar;
         });
         //get + set calendar info
         CalendarView calendar = (CalendarView)findViewById(R.id.calendarView);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         Calendar c = Calendar.getInstance();
         MainActivity.setDate(sdf.format(c.getTime()));
         sdf.format(c.getTime());
@@ -61,7 +61,7 @@ import java.util.Calendar;
                 int d = dayOfMonth;
                 int m = month;
                 int y = year;
-                MainActivity.setDate(String.valueOf(d) + "/" + String.valueOf(m) + "/" + String.valueOf(y));
+                MainActivity.setDate(String.valueOf(m + 1) + "/" + String.valueOf(d) + "/" + String.valueOf(y));
             }
         });
     }
