@@ -13,6 +13,6 @@ public class ConfirmationDisplay extends AppCompatActivity {
 
         setContentView(R.layout.activity_confirmation_display);
         TextView textView = (TextView) findViewById(R.id.dateText);
-        textView.setText(TravelInput.getCurDate());
+        textView.setText(MainActivity.getDate());
     }
 }

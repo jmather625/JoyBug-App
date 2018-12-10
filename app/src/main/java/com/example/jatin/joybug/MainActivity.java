@@ -21,6 +21,48 @@ import com.google.android.gms.tasks.Task;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     GoogleSignInClient mGoogleSignInClient;
     private static final String TAG = "MainActivity";
+    private static String name;
+    public static void setName(String n) {
+        name = n;
+    }
+    public static String getName() {
+        return name;
+    }
+    private static String dest;
+    public static void setDest(String d) {
+        dest = d;
+    }
+    public static String getDest() {
+        return dest;
+    }
+    private static String date;
+    public static void setDate(String d) {
+        date = d;
+    }
+    public static String getDate() {
+        return date;
+    }
+    private static String bio = "No bio :(";
+    public static void setBio(String b) {
+        bio = b;
+    }
+    public static String getBio() {
+        return bio;
+    }
+    private static String email;
+    public static void setEmail(String e) {
+        email = e;
+    }
+    public static String getEmail() {
+        return email;
+    }
+    private static String price;
+    public static void setPrice(String p) {
+        price = p;
+    }
+    public static String getPrice() {
+        return price;
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +120,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateUI(GoogleSignInAccount acct) {
-        Intent intent = new Intent(getApplicationContext(), TravelInput.class);
-        startActivity(intent);
+
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            //String personId = acct.getId();
+            //Uri personPhoto = acct.getPhotoUrl();
+            setName(personName);
+            setEmail(personEmail);
+
+            Intent intent = new Intent(this, InfoScreen.class);
+            startActivity(intent);
     }
 }
 

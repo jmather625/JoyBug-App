@@ -22,7 +22,9 @@
         </activity>
         <activity android:name=".TravelInput" />
         <activity android:name=".ConfirmationDisplay" />
-        <activity android:name=".DriverViewer"></activity>
+        <activity android:name=".DriverViewer" />
+        <activity android:name=".InfoScreen" />
+        <activity android:name=".PricePicker"></activity>
     </application>
 
 </manifest>
