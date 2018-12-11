@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,7 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+
 public class DriverViewer extends AppCompatActivity {
+
+    private static int calls = 0;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
@@ -26,6 +33,8 @@ public class DriverViewer extends AppCompatActivity {
     private String bio;
     private String email;
     private String departDate;
+    private Driver current;
+    List<Driver> driverList = new ArrayList<>();
 
 //most needing integration
     @Override
@@ -34,10 +43,11 @@ public class DriverViewer extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         try {
-            myRef = database.getReference("driveData/Desokkokotination:/jatin mathur25@gmail com");
+            //"driveData/destination/jatin mathur25@gmail com"
+            myRef = database.getReference("driveData/12-12-2018/");
             Log.d("SUCCESS", "right key");
         } catch (Exception e) {
-            Log.d("ERROR1", e.getMessage());
+            Log.d("ERROR 1", e.getMessage());
         }
 
         ValueEventListener test = new ValueEventListener() {
@@ -46,54 +56,77 @@ public class DriverViewer extends AppCompatActivity {
 
                 Log.d("START", "starting snapshot stuff");
 
-                int count = 0;
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    HashMap data = (HashMap) ds.getValue();
-                    try {
-                        String data = ((Object) ds.getValue(String.class)).toString();
-                        Log.d("DATA", data);
+//                List<Driver> driverList = new ArrayList<>();
 
-                        if (count == 0) {
-                            departDate = data;
-                        } else if (count == 1) {
-                            dest = data;
-                        } else if (count == 2) {
-                            bio = data;
-                        } else if (count == 3) {
-                            email = data.replace(' ', '.');
-                        } else if (count == 4) {
-                            name = data;
-                        } else {
-                            price = data;
+                for (DataSnapshot subSnapshot : dataSnapshot.getChildren()) {
+                    try {
+                        int iterator = 0;
+                        for (DataSnapshot dsUser : subSnapshot.getChildren()) {
+                            Log.d("TAG", ((Object) dsUser.getValue(String.class)).toString());
+//                            for (DataSnapshot ds : dsUser.getChildren()) {
+                            try {
+                                String data = ((Object) dsUser.getValue(String.class)).toString();
+                                Log.d("DATA", data);
+                                if (iterator == 0) {
+                                    bio = data;
+                                } else if (iterator == 1) {
+                                    dest = data;
+                                } else if (iterator == 2) {
+                                    departDate = data;
+                                } else if (iterator == 3) {
+                                    email = data.replace(' ', '.');
+                                } else if (iterator == 4) {
+                                    name = data;
+                                } else {
+                                    price = data;
+                                }
+                                iterator += 1;
+                            } catch (Exception e) {
+                                Log.d("ERROR 2", e.getMessage());
+                            }
                         }
-                        count += 1;
-                    } catch(Exception e) {
-                        Log.d("ERROR2", e.getMessage());
+                        Log.d("NETDATA", name + email + dest + bio + departDate + price);
+                        Driver newDriver = new Driver(name, email, dest, bio, departDate, price);
+                        driverList.add(newDriver);
+                        String s = Arrays.toString(driverList.toArray());
+                        Log.d("NETARRAY", s);
+                    } catch (Exception e) {
+                        Log.d("ERROR 3", e.getMessage());
+                        e.printStackTrace();
                     }
+                    for (int i = 0; i < driverList.size(); i++) {
+                        if (i == driverList.size() - 1) {
+                            driverList.get(i).setNext(driverList.get(0));
+                            } else {
+                                driverList.get(i).setNext(driverList.get(i + 1));
+                            }
+                        }
+
+                        // start with the zeroth
+                    current = driverList.get(0);
+                    displayDetails(current);
                 }
-                Log.d("SHOW DATA", price + name + email + bio + dest + departDate);
-                Driver newDriver = new Driver(name, email, dest, bio, departDate, price);
-                displayDetails(newDriver);
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("ERROR", databaseError.getMessage());
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.d("ERROR OVERALL", databaseError.getMessage());
             }
         };
+
 
         myRef.addValueEventListener(test);
 
         setContentView(R.layout.activity_driver_viewer);
 
-        // price doesnt update overall idk why
-//        Log.d("SHOW DATA", price + name + email + bio + dest + departDate);
-
+        //n
         Button nextButton = (Button) findViewById(R.id.button);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //displayDetails(driver.next());
+                displayDetails(current.getNext());
+                Log.d("TAG1", "ok");
+                current = current.getNext();
             }
         });
     }
@@ -101,6 +134,9 @@ public class DriverViewer extends AppCompatActivity {
     public void displayDetails(Driver d) {
 
         setContentView(R.layout.activity_driver_viewer);
+
+        TextView priceView = (TextView) findViewById(R.id.priceText);
+        priceView.setText(d.getPrice());
 
         TextView nameView = (TextView) findViewById(R.id.nameText);
         nameView.setText(d.getName());

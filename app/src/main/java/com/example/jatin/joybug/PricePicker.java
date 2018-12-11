@@ -70,7 +70,7 @@ public class PricePicker extends AppCompatActivity {
         String name = MainActivity.getName();
         String email = MainActivity.getEmail().replace(".", " ");
         String bio = MainActivity.getBio();
-        String departDate = MainActivity.getDate();
+        String departDate = MainActivity.getDate().replace("/","-");
         String destination = MainActivity.getDest();
         String price = MainActivity.getPrice();
 
