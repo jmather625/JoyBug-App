@@ -33,7 +33,12 @@ public class DriverViewer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
+        try {
+            myRef = database.getReference("driveData/Desokkokotination:/jatin mathur25@gmail com");
+            Log.d("SUCCESS", "right key");
+        } catch (Exception e) {
+            Log.d("ERROR1", e.getMessage());
+        }
 
         ValueEventListener test = new ValueEventListener() {
             @Override
@@ -43,37 +48,32 @@ public class DriverViewer extends AppCompatActivity {
 
                 int count = 0;
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    HashMap data = (HashMap) ds.getValue();
-                    for (Object key : data.keySet()) {
-                        count += 1;
-                        Log.d("SHOWING KEYS ON DVIEWER" + count, (String) key);
-//                        Log.d("Data", data.get(key).toString());
-                    }
+//                    HashMap data = (HashMap) ds.getValue();
                     try {
-//                        HashMap drivers = (HashMap) data.get("Desokkokotination:");
-//                        Log.d("DRIVER", data.get("Desokkokotination:").toString());
-                        HashMap drivers = (HashMap) data.get("Desokkokotination:");
-                        try {
-                            String temp_email = "jatin mathur25@gmail com";
-                            HashMap driver = (HashMap) drivers.get(((Object) temp_email));
-                            try {
-                                price = (String) driver.get(((Object) "price"));
-                                name = (String) driver.get(((Object) "name"));
-                                dest = (String) driver.get(((Object) "destination"));
-                                bio = (String) driver.get(((Object) "bio"));
-                                email = (String) driver.get(((Object) "email"));
-                                departDate = (String) driver.get(((Object) "departDate"));
-                                Log.d("PRICE", "Got price " + price);
-                            } catch (Exception e) {
-                                Log.d("Stupid error 2", e.getMessage());
-                            }
-                        } catch (Exception e) {
-                            Log.d("Stupid error 1", e.getMessage());
+                        String data = ((Object) ds.getValue(String.class)).toString();
+                        Log.d("DATA", data);
+
+                        if (count == 0) {
+                            departDate = data;
+                        } else if (count == 1) {
+                            dest = data;
+                        } else if (count == 2) {
+                            bio = data;
+                        } else if (count == 3) {
+                            email = data.replace(' ', '.');
+                        } else if (count == 4) {
+                            name = data;
+                        } else {
+                            price = data;
                         }
-                    } catch (Exception e) {
-                        Log.d("Stupid error 0", e.getMessage());
+                        count += 1;
+                    } catch(Exception e) {
+                        Log.d("ERROR2", e.getMessage());
                     }
                 }
+                Log.d("SHOW DATA", price + name + email + bio + dest + departDate);
+                Driver newDriver = new Driver(name, email, dest, bio, departDate, price);
+                displayDetails(newDriver);
             }
 
             @Override
@@ -86,7 +86,8 @@ public class DriverViewer extends AppCompatActivity {
 
         setContentView(R.layout.activity_driver_viewer);
 
-        Log.d("SHOW DATA", price + name + email + bio + dest + departDate);
+        // price doesnt update overall idk why
+//        Log.d("SHOW DATA", price + name + email + bio + dest + departDate);
 
         Button nextButton = (Button) findViewById(R.id.button);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -97,24 +98,20 @@ public class DriverViewer extends AppCompatActivity {
         });
     }
 
-    public void displayDetails() {
+    public void displayDetails(Driver d) {
 
         setContentView(R.layout.activity_driver_viewer);
 
         TextView nameView = (TextView) findViewById(R.id.nameText);
-        Log.d("NAME", this.name);
-        nameView.setText(this.name);
+        nameView.setText(d.getName());
 
         TextView destView = (TextView) findViewById(R.id.destText);
-        Log.d("DEST", this.dest);
-        destView.setText(this.dest);
+        destView.setText(d.getDestination());
 
         TextView bioView = (TextView) findViewById(R.id.bioText);
-        Log.d("BIO", this.bio);
-        bioView.setText(this.bio);
+        bioView.setText(d.getBio());
 
         TextView emailView = (TextView) findViewById(R.id.emailText);
-        Log.d("EMAIL", this.email);
-        emailView.setText(this.email);
+        emailView.setText(d.getEmail());
     }
 }
