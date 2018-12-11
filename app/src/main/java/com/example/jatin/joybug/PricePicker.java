@@ -74,9 +74,9 @@ public class PricePicker extends AppCompatActivity {
         String destination = MainActivity.getDest();
         String price = MainActivity.getPrice();
 
-        Driver testDriver = new Driver(name, email, bio, departDate, destination, price);
+        Driver newDriver = new Driver(name, email, destination, bio, departDate, price);
         Database d = new Database(FirebaseDatabase.getInstance());
-        boolean testAdd = d.addDriver(testDriver);
+        boolean testAdd = d.addDriver(newDriver);
         startActivity(intent);
     }
 }

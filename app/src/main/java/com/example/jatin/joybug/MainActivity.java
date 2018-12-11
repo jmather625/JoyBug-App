@@ -1,6 +1,7 @@
 package com.example.jatin.joybug;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 
 import com.google.firebase.database.*;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     GoogleSignInClient mGoogleSignInClient;
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,9 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        Driver testDriver = new Driver("TEST", "TEST", "Chicago", "Cool kid", "12-10-18", "10");
-        Database d = new Database(FirebaseDatabase.getInstance());
-        boolean testAdd = d.addDriver(testDriver);
     }
 
     public void onClick(View v) {
