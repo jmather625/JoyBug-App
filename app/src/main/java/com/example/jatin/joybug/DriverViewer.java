@@ -8,17 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class DriverViewer extends AppCompatActivity {
@@ -34,29 +31,31 @@ public class DriverViewer extends AppCompatActivity {
     private String email;
     private String departDate;
 
-//most needing integration
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        database = FirebaseDatabase.getInstance();
-        String travelDate = MainActivity.getDate().replace("/","-");
-        setCurrent(0, travelDate);
+        final String travelDate = MainActivity.getDate().replace("/","-");
+        setCurrent(calls, travelDate);
 
         setContentView(R.layout.activity_driver_viewer);
-        Button bButton = (Button) findViewById(R.id.button);
-        bButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+        class SayHello extends TimerTask {
+            public void run() {
                 calls++;
-                try {
-                    Log.d("TAGS", "calls:");
-//                    this should do the trick..
-//                    setCurrent(calls);
-                } catch (Exception e) {
-                    Log.d("TAGS", e.getMessage());
-                }
+                setCurrent(calls, travelDate);
             }
-        });
+        }
+
+        Timer timer = new Timer();
+        timer.schedule(new SayHello(), 0, 5000);
+//        Button bButton = (Button) findViewById(R.id.button);
+//        bButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                calls++;
+//                Log.d("TAGS", "calls:" + calls);
+//            }
+//        });
 
     }
 
@@ -81,7 +80,7 @@ public class DriverViewer extends AppCompatActivity {
     }
 
     public void setCurrent(final int count, final String setDate) {
-
+        database = FirebaseDatabase.getInstance();
         try {
             String path = "driveData/" + setDate;
             Log.d("PATH", path);
