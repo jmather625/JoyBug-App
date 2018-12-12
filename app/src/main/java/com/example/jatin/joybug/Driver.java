@@ -14,7 +14,7 @@ public class Driver extends User {
     }
 
     public String toString() {
-        return ("Name: " + this.name + "\nNetid: " + this.email + "\nDestination: " + this.destination
+        return ("Name: " + this.name + "\nEmail: " + this.email + "\nDestination: " + this.destination
                 + "\nBio: " + this.bio + "\nDepart Date: " + this.departDate);
     }
 

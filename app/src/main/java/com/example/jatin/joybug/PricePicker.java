@@ -20,6 +20,7 @@ public class PricePicker extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MainActivity.setPrice("$0");
+                openConfirmationDisplay();
             }
         });
 

@@ -33,102 +33,31 @@ public class DriverViewer extends AppCompatActivity {
     private String bio;
     private String email;
     private String departDate;
-    private Driver current;
-    List<Driver> driverList = new ArrayList<>();
 
 //most needing integration
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         database = FirebaseDatabase.getInstance();
-        try {
-            //"driveData/destination/jatin mathur25@gmail com"
-            myRef = database.getReference("driveData/12-12-2018/");
-            Log.d("SUCCESS", "right key");
-        } catch (Exception e) {
-            Log.d("ERROR 1", e.getMessage());
-        }
-
-        ValueEventListener test = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Log.d("START", "starting snapshot stuff");
-
-//                List<Driver> driverList = new ArrayList<>();
-
-                for (DataSnapshot subSnapshot : dataSnapshot.getChildren()) {
-                    try {
-                        int iterator = 0;
-                        for (DataSnapshot dsUser : subSnapshot.getChildren()) {
-                            Log.d("TAG", ((Object) dsUser.getValue(String.class)).toString());
-//                            for (DataSnapshot ds : dsUser.getChildren()) {
-                            try {
-                                String data = ((Object) dsUser.getValue(String.class)).toString();
-                                Log.d("DATA", data);
-                                if (iterator == 0) {
-                                    bio = data;
-                                } else if (iterator == 1) {
-                                    dest = data;
-                                } else if (iterator == 2) {
-                                    departDate = data;
-                                } else if (iterator == 3) {
-                                    email = data.replace(' ', '.');
-                                } else if (iterator == 4) {
-                                    name = data;
-                                } else {
-                                    price = data;
-                                }
-                                iterator += 1;
-                            } catch (Exception e) {
-                                Log.d("ERROR 2", e.getMessage());
-                            }
-                        }
-                        Log.d("NETDATA", name + email + dest + bio + departDate + price);
-                        Driver newDriver = new Driver(name, email, dest, bio, departDate, price);
-                        driverList.add(newDriver);
-                        String s = Arrays.toString(driverList.toArray());
-                        Log.d("NETARRAY", s);
-                    } catch (Exception e) {
-                        Log.d("ERROR 3", e.getMessage());
-                        e.printStackTrace();
-                    }
-                    for (int i = 0; i < driverList.size(); i++) {
-                        if (i == driverList.size() - 1) {
-                            driverList.get(i).setNext(driverList.get(0));
-                            } else {
-                                driverList.get(i).setNext(driverList.get(i + 1));
-                            }
-                        }
-
-                        // start with the zeroth
-                    current = driverList.get(0);
-                    displayDetails(current);
-                }
-            }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-            Log.d("ERROR OVERALL", databaseError.getMessage());
-            }
-        };
-
-
-        myRef.addValueEventListener(test);
+        String travelDate = MainActivity.getDate().replace("/","-");
+        setCurrent(0, travelDate);
 
         setContentView(R.layout.activity_driver_viewer);
-
-        //n
-        Button nextButton = (Button) findViewById(R.id.button);
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        Button bButton = (Button) findViewById(R.id.button);
+        bButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayDetails(current.getNext());
-                Log.d("TAG1", "ok");
-                current = current.getNext();
+                calls++;
+                try {
+                    Log.d("TAGS", "calls:");
+//                    this should do the trick..
+//                    setCurrent(calls);
+                } catch (Exception e) {
+                    Log.d("TAGS", e.getMessage());
+                }
             }
         });
+
     }
 
     public void displayDetails(Driver d) {
@@ -149,5 +78,84 @@ public class DriverViewer extends AppCompatActivity {
 
         TextView emailView = (TextView) findViewById(R.id.emailText);
         emailView.setText(d.getEmail());
+    }
+
+    public void setCurrent(final int count, final String setDate) {
+
+        try {
+            String path = "driveData/" + setDate;
+            Log.d("PATH", path);
+            myRef = database.getReference(path);
+
+            ValueEventListener test = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    int counter = -1;
+                    Driver foundDriver = null;
+                    for (DataSnapshot relevantDrivers : dataSnapshot.getChildren()) {
+                        Log.d("DRIVERS", ((Object) relevantDrivers.getValue()).toString());
+                        counter++;
+                        int numChildren = (int) dataSnapshot.getChildrenCount();
+                        Log.d("DEBUG", "children:" + numChildren + "counter:" + counter);
+
+                        if (counter == (count % numChildren)) {
+                            try {
+                                int iterator = 0;
+                                for (DataSnapshot driverInfo : relevantDrivers.getChildren()) {
+                                    Log.d("TAG", ((Object) driverInfo.getValue(String.class)).toString());
+                                    try {
+                                        String data = ((Object) driverInfo.getValue(String.class)).toString();
+                                        Log.d("DATA", data);
+                                        if (iterator == 0) {
+                                            bio = data;
+                                        } else if (iterator == 1) {
+                                            dest = data;
+                                        } else if (iterator == 2) {
+                                            departDate = data;
+                                        } else if (iterator == 3) {
+                                            email = data.replace(' ', '.');
+                                        } else if (iterator == 4) {
+                                            name = data;
+                                        } else {
+                                            price = data;
+                                        }
+                                        iterator += 1;
+                                    } catch (Exception e) {
+                                        Log.d("ERROR 2", e.getMessage());
+                                    }
+                                }
+                                foundDriver = new Driver(name, email, dest, bio, departDate, price);
+                                displayDetails(foundDriver);
+                                break;
+                            } catch (Exception e) {
+                                Log.d("ERROR 3", e.getMessage());
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    if (foundDriver == null) {
+                        Log.d("DRIVERS NONE", "no driver found");
+                        Driver empty = new Driver(" ", " ", " ", " ", " ",
+                                "No driver on this date");
+                        displayDetails(empty);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.d("ERROR DATABASE", databaseError.getMessage());
+                }
+            };
+
+            myRef.addValueEventListener(test);
+
+        } catch (Exception e) {
+            Log.d("ERROR 1", e.getMessage());
+            Driver empty = new Driver(" ", " ", " ", " ", " ",
+                    "No driver on this date");
+            displayDetails(empty);
+        }
     }
 }
