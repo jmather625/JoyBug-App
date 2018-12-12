@@ -109,9 +109,9 @@ public class DriverViewer extends AppCompatActivity {
                                         if (iterator == 0) {
                                             bio = data;
                                         } else if (iterator == 1) {
-                                            dest = data;
-                                        } else if (iterator == 2) {
                                             departDate = data;
+                                        } else if (iterator == 2) {
+                                            dest = data;
                                         } else if (iterator == 3) {
                                             email = data.replace(' ', '.');
                                         } else if (iterator == 4) {
