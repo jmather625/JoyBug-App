@@ -21,8 +21,13 @@ EditText mEdit;
             @Override
             public void onClick(View v) {
                 String bio = mEdit.getText().toString();
-                MainActivity.setBio(bio);
-                openTravelInput();
+                if (bio.length() < 20) {
+                    MainActivity.setBio(bio);
+                    openTravelInput();
+                } else {
+                    mEdit.setHint("Please shorten bio");
+                }
+
             }
         });
 

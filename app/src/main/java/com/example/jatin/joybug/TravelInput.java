@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,7 +28,7 @@ import java.util.Calendar;
             public void onClick(View v) {
                 String dest = mEdit.getText().toString();
                 if (dest.equals("")) {
-                   //show error message
+                   mEdit.setHint("Please input destination");
                 } else {
                     MainActivity.setDest(dest);
                     openPricePicker();
@@ -41,7 +42,7 @@ import java.util.Calendar;
             public void onClick(View v) {
                 String dest = mEdit.getText().toString();
                 if (dest.equals("")) {
-                    //show error message
+                    mEdit.setHint("Please input destination");
                 } else {
                     MainActivity.setDest(dest);
                     openDriverViewer();
