@@ -9,7 +9,6 @@
 
     <Button
         android:id="@+id/driveButton"
-        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_alignEnd="@+id/calendarView"
         android:layout_alignRight="@id/calendarView"
@@ -25,7 +24,8 @@
         android:text="Continue as Driver"
         android:textColor="#ffffff"
         tools:layout_editor_absoluteX="218dp"
-        tools:layout_editor_absoluteY="419dp" />
+        tools:layout_editor_absoluteY="419dp"
+        android:layout_width="150dp"/>
 
     <CalendarView
         android:id="@+id/calendarView"
@@ -48,7 +48,6 @@
 
     <Button
         android:id="@+id/passButton"
-        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_alignEnd="@+id/calendarView"
         android:layout_alignRight="@id/calendarView"
@@ -60,23 +59,18 @@
         android:text="Continue as Passenger"
         android:textColor="#ffffff"
         tools:layout_editor_absoluteX="218dp"
-        tools:layout_editor_absoluteY="419dp" />
+        tools:layout_editor_absoluteY="419dp"
+        android:layout_width="150dp"
+        />
 
     <TextView
         android:id="@+id/calendarDirect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="82dp"
-        android:layout_marginLeft="82dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="77dp"
-        android:layout_marginRight="77dp"
         android:layout_marginBottom="524dp"
         android:text="Please select your travel date below"
         android:textColor="#bfbfbf"

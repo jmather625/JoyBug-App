@@ -1,6 +1,7 @@
  package com.example.jatin.joybug;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,7 @@ import java.util.Calendar;
                 String dest = mEdit.getText().toString();
                 if (dest.equals("")) {
                    mEdit.setHint("Please input destination");
+                   mEdit.setHintTextColor(Color.argb(100, 255, 50, 50));
                 } else {
                     MainActivity.setDest(dest);
                     openPricePicker();
@@ -43,6 +45,7 @@ import java.util.Calendar;
                 String dest = mEdit.getText().toString();
                 if (dest.equals("")) {
                     mEdit.setHint("Please input destination");
+                    mEdit.setHintTextColor(Color.argb(100, 255, 50, 50));
                 } else {
                     MainActivity.setDest(dest);
                     openDriverViewer();

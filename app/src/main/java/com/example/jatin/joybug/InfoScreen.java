@@ -1,12 +1,15 @@
 package com.example.jatin.joybug;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import static android.graphics.Color.RED;
 
 public class InfoScreen extends AppCompatActivity {
 EditText mEdit;
@@ -26,6 +29,8 @@ EditText mEdit;
                     openTravelInput();
                 } else {
                     mEdit.setHint("Please shorten bio");
+                    mEdit.setHintTextColor(Color.argb(100, 255, 50, 50));
+                    mEdit.setText("");
                 }
 
             }
